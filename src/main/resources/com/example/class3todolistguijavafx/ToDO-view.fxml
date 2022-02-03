@@ -48,6 +48,7 @@
                </children>
             </HBox>
             <Button fx:id="clearWholeListButton" mnemonicParsing="false" onAction="#clearWholeList" text="Clear whole list" />
+            <Button mnemonicParsing="false" onAction="#undoList" text="Undo" />
          </children>
       </VBox>
    </center>

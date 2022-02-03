@@ -38,6 +38,7 @@ public class ToDoListController {
 
 
     ObservableList<String> todoObservableList = FXCollections.observableArrayList("Task1", "Task2", "Task3");
+    ObservableList<String> removedObservableList= FXCollections.observableArrayList();
 
 
     @FXML
@@ -62,6 +63,7 @@ public class ToDoListController {
         if(!newTask.equals("")){
             todoObservableList.add(newTask);
         }
+        newTaskField.clear();
     }
 
     @FXML
@@ -70,12 +72,35 @@ public class ToDoListController {
         String selectedTask = selectedModel.getSelectedItem();
 
         System.out.println(selectedTask);
+        removedObservableList.add(selectedTask);
 
         todoObservableList.remove(selectedTask);
+        System.out.println(removedObservableList);
     }
 
     @FXML
     void clearWholeList(ActionEvent event) {
+
+        System.out.println(todoObservableList +  " before remove\n");
+
+
+        for(int i = 0 ; i<todoObservableList.size(); i++){
+            removedObservableList.add(todoObservableList.get(i));
+        }
+
         todoObservableList.clear();
+        System.out.println(todoObservableList +  " after remove");
+        System.out.println(removedObservableList);
+    }
+
+    @FXML
+    void undoList(ActionEvent event) {
+
+        for(int i = 0 ; i<removedObservableList.size(); i++){
+            todoObservableList.add(removedObservableList.get(i));
+        }
+
+        removedObservableList.clear();
+
     }
 }
