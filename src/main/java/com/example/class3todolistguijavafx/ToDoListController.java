@@ -6,13 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 public class ToDoListController {
 
@@ -28,28 +25,19 @@ public class ToDoListController {
 
     @FXML
     private ListView<String> taskList;
-    @FXML
-    private Label welcomeText;
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
 
 
     ObservableList<String> todoObservableList = FXCollections.observableArrayList("Task1", "Task2", "Task3");
-    ObservableList<String> removedObservableList= FXCollections.observableArrayList();
+    ObservableList<String> removedObservableList = FXCollections.observableArrayList();
 
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         // this code runs when the controller is loaded
         taskList.setItems(todoObservableList);
 
 
-
     }
-
 
 
     @FXML
@@ -57,10 +45,10 @@ public class ToDoListController {
         addTask();
     }
 
-    private void addTask(){
+    private void addTask() {
         String newTask = newTaskField.getText();
 
-        if(!newTask.equals("")){
+        if (!newTask.equals("")) {
             todoObservableList.add(newTask);
         }
         newTaskField.clear();
@@ -81,26 +69,32 @@ public class ToDoListController {
     @FXML
     void clearWholeList(ActionEvent event) {
 
-        System.out.println(todoObservableList +  " before remove\n");
+        System.out.println(todoObservableList + " before remove\n");
 
 
-        for(int i = 0 ; i<todoObservableList.size(); i++){
+        for (int i = 0; i < todoObservableList.size(); i++) {
             removedObservableList.add(todoObservableList.get(i));
         }
 
         todoObservableList.clear();
-        System.out.println(todoObservableList +  " after remove");
+        System.out.println(todoObservableList + " after remove");
         System.out.println(removedObservableList);
     }
 
     @FXML
     void undoList(ActionEvent event) {
+//
+//        undo all list at one once
+//        for (int i ; i < removedObservableList.size(); i++) {
+//            todoObservableList.add(removedObservableList.get(i));
+//        }
 
-        for(int i = 0 ; i<removedObservableList.size(); i++){
-            todoObservableList.add(removedObservableList.get(i));
+        try {
+            int index = removedObservableList.size() -1 ;
+            todoObservableList.add(removedObservableList.get(index));
+            removedObservableList.remove(index);
+        } catch (Exception e){
+            System.out.println("No more list to undo.");
         }
-
-        removedObservableList.clear();
-
     }
 }
