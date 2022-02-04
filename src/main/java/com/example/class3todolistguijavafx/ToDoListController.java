@@ -7,10 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import javafx.scene.control.ListView;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
 public class ToDoListController {
 
 
@@ -30,6 +28,8 @@ public class ToDoListController {
     ObservableList<String> todoObservableList = FXCollections.observableArrayList("Task1", "Task2", "Task3");
     ObservableList<String> removedObservableList = FXCollections.observableArrayList();
 
+
+    boolean listCleared = false;
 
     @FXML
     public void initialize() {
@@ -79,6 +79,8 @@ public class ToDoListController {
         todoObservableList.clear();
         System.out.println(todoObservableList + " after remove");
         System.out.println(removedObservableList);
+
+        listCleared = true;
     }
 
     @FXML
@@ -89,12 +91,22 @@ public class ToDoListController {
 //            todoObservableList.add(removedObservableList.get(i));
 //        }
 
-        try {
-            int index = removedObservableList.size() -1 ;
-            todoObservableList.add(removedObservableList.get(index));
-            removedObservableList.remove(index);
-        } catch (Exception e){
-            System.out.println("No more list to undo.");
+
+        if(listCleared){
+            for (int i = 0 ; i < removedObservableList.size(); i++) {
+                todoObservableList.add(removedObservableList.get(i));
+            }
+            removedObservableList.clear();
+            listCleared = false;
+        } else {
+            try {
+                int index = removedObservableList.size() -1 ;
+                todoObservableList.add(removedObservableList.get(index));
+                removedObservableList.remove(index);
+            } catch (Exception e){
+                System.out.println("No more list to undo.");
+            }
         }
+
     }
 }
