@@ -25,7 +25,7 @@ public class ToDoListController {
     private ListView<String> taskList;
 
 
-    ObservableList<String> todoObservableList = FXCollections.observableArrayList("Task1", "Task2", "Task3");
+    ObservableList<String> todoObservableList = FXCollections.observableArrayList("Task 1", "Task 2", "Task 3", "Task 4", "Task 5");
     ObservableList<String> removedObservableList = FXCollections.observableArrayList();
 
 
@@ -56,14 +56,25 @@ public class ToDoListController {
 
     @FXML
     void removeTask(ActionEvent event) {
-        MultipleSelectionModel<String> selectedModel = taskList.getSelectionModel();
-        String selectedTask = selectedModel.getSelectedItem();
 
-        System.out.println(selectedTask);
-        removedObservableList.add(selectedTask);
 
-        todoObservableList.remove(selectedTask);
-        System.out.println(removedObservableList);
+
+
+            MultipleSelectionModel<String> selectedModel = taskList.getSelectionModel();
+            String selectedTask = selectedModel.getSelectedItem();
+
+            if(selectedTask == null) {
+                System.out.println("No more task to remove 1");
+//                return ;
+            } else {
+                System.out.println(selectedTask);
+                removedObservableList.add(selectedTask);
+
+                todoObservableList.remove(selectedTask);
+                System.out.println(removedObservableList);
+            }
+
+
     }
 
     @FXML
